@@ -29,7 +29,6 @@
             </div>
         </div>
         <!--// 스티커 메모 -->
-        <div id="field"></div>
     </div>
     <script>
         document.addEventListener('mousedown', ()=>{
@@ -38,25 +37,30 @@
                 const div = document.getElementsByClassName('wrap');
                 const newMemo = document.getElementsByClassName('memo');
                 const cloneDiv = newMemo[0].cloneNode(true);
+                cloneDiv.id = 'memo_' + event.clientX;
                 cloneDiv.style.top = event.clientY + "px";
                 cloneDiv.style.left = event.clientX + "px";
                 document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
             }
         })
         
-        
+        //클릭
         document.addEventListener('click',(e)=>{
-            console.log(e.target.getAttribute('class'))
+            // console.log(e.target.getAttribute('id').parentNode)
+            const clickDiv = document.getElementById(e.target.getAttribute('id'));
             // dragElement(document.getElementById("memo"));
-            dragElement(document.getElementById("memo"));
+            // console.log(e.target.offsetParent.id.length > 0)
+            if (e.target.offsetParent.id.length > 0) {
+                dragElement(e.target.offsetParent);
+            }
         })
         //드래그
         function dragElement(el) {
-            // console.log(e)
+            console.log(el)
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            // console.log(document.getElementById(el.id))
-            if (document.getElementById("header")) {
-                document.getElementById("header").onmousedown = dragMouseDown;
+
+            if (el.childNodes[1]) {
+                el.childNodes[1].onmousedown = dragMouseDown;
             } else {
                 /* otherwise, move the DIV from anywhere inside the DIV:*/
                 el.onmousedown = dragMouseDown;
@@ -79,7 +83,6 @@
                 pos2 = pos4 - e.clientY;
                 pos3 = e.clientX;
                 pos4 = e.clientY;
-                console.log(pos4)
                 // set the element's new position:
                 el.style.top = (el.offsetTop - pos2) + "px";
                 el.style.left = (el.offsetLeft - pos1) + "px";
@@ -90,6 +93,7 @@
                 document.onmousemove = null;
             }
         }
+        
 
         
     </script>    
