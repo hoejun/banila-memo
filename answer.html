@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Memo</title>
+    <link rel="stylesheet" href="answer.css">
+    
+</head>
+<body>
+    <div class="wrap">
+        <!-- 스티커 메모 -->
+        <div id="memo" class="memo" style="top:100px;left:100px">
+            <div id="header" class="header">
+                <h1 class="blind">메모장</h1>
+                <button class="btn_close"><span class="blind">닫기</span></button>
+            </div>
+            <div class="content">
+                <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
+                    메모 하십시오! 메모 하십시오!메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                    메모 하십시오!<br>
+                </div>
+                <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
+            </div>
+        </div>
+        <!--// 스티커 메모 -->
+        <div id="field"></div>
+    </div>
+    <script>
+        document.addEventListener('mousedown', ()=>{
+            //오른쪽 버튼
+            if(event.button === 2 || event.which === 3) {
+                const div = document.getElementsByClassName('wrap');
+                const newMemo = document.getElementsByClassName('memo');
+                const cloneDiv = newMemo[0].cloneNode(true);
+                cloneDiv.style.top = event.clientY + "px";
+                cloneDiv.style.left = event.clientX + "px";
+                document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
+            }
+        })
+        
+        
+        document.addEventListener('click',(e)=>{
+            console.log(e.target.getAttribute('class'))
+            // dragElement(document.getElementById("memo"));
+            dragElement(document.getElementById("memo"));
+        })
+        //드래그
+        function dragElement(el) {
+            // console.log(e)
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            // console.log(document.getElementById(el.id))
+            if (document.getElementById("header")) {
+                document.getElementById("header").onmousedown = dragMouseDown;
+            } else {
+                /* otherwise, move the DIV from anywhere inside the DIV:*/
+                el.onmousedown = dragMouseDown;
+            }
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+            }
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                console.log(pos4)
+                // set the element's new position:
+                el.style.top = (el.offsetTop - pos2) + "px";
+                el.style.left = (el.offsetLeft - pos1) + "px";
+            }
+            function closeDragElement() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        
+    </script>    
+</body>
+</html>
