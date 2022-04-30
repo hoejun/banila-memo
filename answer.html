@@ -47,18 +47,35 @@
         //클릭
         document.addEventListener('click',(e)=>{
             // console.log(e.target.getAttribute('id').parentNode)
-            const clickDiv = document.getElementById(e.target.getAttribute('id'));
-            // dragElement(document.getElementById("memo"));
-            // console.log(e.target.offsetParent.id.length > 0)
+            // const clickDiv = document.getElementById(e.target.getAttribute('id'));
             if (e.target.offsetParent.id.length > 0) {
+                
+                // document.querySelector('.memo').style.zIndex = 0;
+                var hiClass = document.getElementsByClassName("memo");
+                for(var i=0, len=hiClass.length; i<len; i++)
+                {
+                    hiClass[i].style["z-index"] = 0;
+                    // hiClass[i].childNodes[3].style["z-index"] = 0;
+                }
+                
                 dragElement(e.target.offsetParent);
+            } else {
+                var hiClass = document.getElementsByClassName("memo");
+                for(var i=0, len=hiClass.length; i<len; i++)
+                {
+                    hiClass[i].style["z-index"] = 0;
+                    // hiClass[i].childNodes[3].style["z-index"] = 0;
+                }
+                // console.log(e.path[2])
+                e.path[2].style["z-index"] =1;
             }
         })
         //드래그
         function dragElement(el) {
-            console.log(el)
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
+            
+            el.style.zIndex = 1;
+            // console.log(el.childNodes)
             if (el.childNodes[1]) {
                 el.childNodes[1].onmousedown = dragMouseDown;
             } else {
