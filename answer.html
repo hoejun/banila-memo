@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="answer.css">
     
 </head>
-<body>
+<body onload="myInit()">
     <div class="wrap">
         <!-- 스티커 메모 -->
         <div id="memo" class="memo" style="top:100px;left:100px;">
@@ -31,6 +31,15 @@
         <!--// 스티커 메모 -->
     </div>
     <script>
+        function myInit () {
+            // let div = document.createElement(localStorage.getItem('now'));
+            // console.log(localStorage.getItem('now'))
+            // document.getElementsByClassName('wrap')[0].appendChild(localStorage.getItem('now'))
+            if (localStorage.getItem('now').length > 0) {
+                document.getElementsByClassName("wrap")[0].innerHTML = localStorage.getItem('now')
+
+            }
+        }
         document.addEventListener('mousedown', ()=>{
             //오른쪽 버튼
             if(event.button === 2 || event.which === 3) {
@@ -42,6 +51,15 @@
                 cloneDiv.style.left = event.clientX + "px";
                 document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
             }
+            const store = document.getElementsByClassName('wrap')[0].innerHTML;
+            
+            try {
+                const now = "test" + Date.now() + Math.random();
+                localStorage.setItem('now', store)
+            } catch (error) {
+                console.log(error);
+            }
+            
         })
         
         //클릭
