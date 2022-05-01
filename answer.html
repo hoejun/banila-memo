@@ -9,10 +9,10 @@
 <body>
     <div class="wrap">
         <!-- 스티커 메모 -->
-        <div id="memo" class="memo" style="top:100px;left:100px">
+        <div id="memo" class="memo" style="top:100px;left:100px;">
             <div id="header" class="header">
                 <h1 class="blind">메모장</h1>
-                <button class="btn_close"><span class="blind">닫기</span></button>
+                <button id="btn_close" class="btn_close" onclick="delteDiv()"><span class="blind">닫기</span></button>
             </div>
             <div class="content">
                 <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
@@ -25,7 +25,7 @@
                     메모 하십시오!<br>
                     메모 하십시오!<br>
                 </div>
-                <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
+                <button class="btn_size" onclick="resizeDiv(this.id)"><span class="blind">메모장 크기 조절</span></button>
             </div>
         </div>
         <!--// 스티커 메모 -->
@@ -52,21 +52,16 @@
                 
                 // document.querySelector('.memo').style.zIndex = 0;
                 var hiClass = document.getElementsByClassName("memo");
-                for(var i=0, len=hiClass.length; i<len; i++)
-                {
+                for(var i=0, len=hiClass.length; i<len; i++) {
                     hiClass[i].style["z-index"] = 0;
-                    // hiClass[i].childNodes[3].style["z-index"] = 0;
                 }
                 
                 dragElement(e.target.offsetParent);
             } else {
                 var hiClass = document.getElementsByClassName("memo");
-                for(var i=0, len=hiClass.length; i<len; i++)
-                {
+                for(var i=0, len=hiClass.length; i<len; i++) {
                     hiClass[i].style["z-index"] = 0;
-                    // hiClass[i].childNodes[3].style["z-index"] = 0;
                 }
-                // console.log(e.path[2])
                 e.path[2].style["z-index"] =1;
             }
         })
@@ -109,6 +104,46 @@
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
+        }
+        function delteDiv() {
+            // const buttonDiv = document.getElementById("btn_close");
+            document.addEventListener('click',(e)=>{
+                const div = e.path[2];
+                div.remove();
+            })
+        }
+        function resizeDiv() {
+            // const textDiv = event.path[1].childNodes[1];            
+            const memoDiv = event.target.offsetParent.offsetParent.id;
+            // const parentDiv = e.target.offsetParent;
+            // console.log(textDiv)
+            const memoId = document.getElementById(memoDiv);
+            let x = 0, y = 0;
+            memoId.addEventListener("mousedown",(e)=>{
+                // e.preventDefault();
+                // console.log(e.path[1].childNodes[1])
+                const rect = e.path[1].childNodes[1].getBoundingClientRect();
+                
+                // const x = event.clientX - rect.left;
+                // const y = event.clientY - rect.top;
+                // const w = rect.right - e.clientX;
+                // const w = event.clientX - event.clientY;
+                // console.log( e.path[1].childNodes[1].onmousedown.clientX)
+                // console.log(e.path[1].childNodes[1].style)
+                // e.path[1].childNodes[1].style.width = x + 'px';
+                mouseMove(rect);
+            })
+            function mouseMove (_rect) {
+                memoId.addEventListener("mousemove",(e)=>{
+                    x = event.clientX - _rect.left;
+                    y = event.clientY - _rect.top;
+                    
+                    e.path[1].childNodes[1].style.width = x + 'px';
+                    e.path[1].childNodes[1].style.height = y + 'px';
+                    
+                })
+            }
+            
         }
         
 
