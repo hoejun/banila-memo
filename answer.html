@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Memo</title>
     <link rel="stylesheet" href="answer.css">
-    
 </head>
 <body onload="myInit()">
     <div class="wrap">
@@ -30,99 +29,101 @@
         </div>
         <!--// 스티커 메모 -->
     </div>
+    <script src="./util.js"></script>
     <script>
-        function myInit () {
-            // let div = document.createElement(localStorage.getItem('now'));
-            // console.log(localStorage.getItem('now'))
-            // document.getElementsByClassName('wrap')[0].appendChild(localStorage.getItem('now'))
-            if (localStorage.getItem('now').length > 0) {
-                document.getElementsByClassName("wrap")[0].innerHTML = localStorage.getItem('now')
+        // function myInit () {
+        //     // let div = document.createElement(localStorage.getItem('now'));
+        //     // console.log(localStorage.getItem('now'))
+        //     // document.getElementsByClassName('wrap')[0].appendChild(localStorage.getItem('now'))
+        //     if (localStorage.getItem('now').length > 0) {
+        //         document.getElementsByClassName("wrap")[0].innerHTML = localStorage.getItem('now')
 
-            }
-        }
-        document.addEventListener('mousedown', ()=>{
-            //오른쪽 버튼
-            if(event.button === 2 || event.which === 3) {
-                const div = document.getElementsByClassName('wrap');
-                const newMemo = document.getElementsByClassName('memo');
-                const cloneDiv = newMemo[0].cloneNode(true);
-                cloneDiv.id = 'memo_' + event.clientX;
-                cloneDiv.style.top = event.clientY + "px";
-                cloneDiv.style.left = event.clientX + "px";
-                document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
-            }
-            const store = document.getElementsByClassName('wrap')[0].innerHTML;
+        //     }
+        // }
+        // document.addEventListener('mousedown', ()=>{
             
-            try {
-                const now = "test" + Date.now() + Math.random();
-                localStorage.setItem('now', store)
-            } catch (error) {
-                console.log(error);
-            }
+        //     //오른쪽 버튼
+        //     if(event.button === 2 || event.which === 3) {
+        //         // const div = document.getElementsByClassName('wrap');
+        //         const newMemo = document.getElementsByClassName('memo');
+        //         const cloneDiv = newMemo[0].cloneNode(true);
+        //         cloneDiv.id = 'memo_' + event.clientX;
+        //         cloneDiv.style.top = event.clientY + "px";
+        //         cloneDiv.style.left = event.clientX + "px";
+        //         document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
+        //     }
+
+        //     const store = document.getElementsByClassName('wrap')[0].innerHTML;
             
-        })
+        //     try {
+        //         localStorage.setItem('now', store)
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+            
+        // })
         
         //클릭
-        document.addEventListener('click',(e)=>{
-            // console.log(e.target.getAttribute('id').parentNode)
-            // const clickDiv = document.getElementById(e.target.getAttribute('id'));
-            if (e.target.offsetParent.id.length > 0) {
+        // document.addEventListener('click',(e)=>{
+        //     // console.log(e.target.getAttribute('id').parentNode)
+        //     // const clickDiv = document.getElementById(e.target.getAttribute('id'));
+        //     if (e.target.offsetParent.id.length > 0) {
                 
-                // document.querySelector('.memo').style.zIndex = 0;
-                var hiClass = document.getElementsByClassName("memo");
-                for(var i=0, len=hiClass.length; i<len; i++) {
-                    hiClass[i].style["z-index"] = 0;
-                }
+        //         // document.querySelector('.memo').style.zIndex = 0;
+        //         var hiClass = document.getElementsByClassName("memo");
+        //         for(var i=0, len=hiClass.length; i<len; i++) {
+        //             hiClass[i].style["z-index"] = 0;
+        //         }
                 
-                dragElement(e.target.offsetParent);
-            } else {
-                var hiClass = document.getElementsByClassName("memo");
-                for(var i=0, len=hiClass.length; i<len; i++) {
-                    hiClass[i].style["z-index"] = 0;
-                }
-                e.path[2].style["z-index"] =1;
-            }
-        })
-        //드래그
-        function dragElement(el) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        //         dragElement(e.target.offsetParent);
+        //     } else {
+        //         var hiClass = document.getElementsByClassName("memo");
+        //         for(var i=0, len=hiClass.length; i<len; i++) {
+        //             hiClass[i].style["z-index"] = 0;
+        //         }
+        //         e.path[2].style["z-index"] =1;
+        //     }
+        // })
+        // //드래그
+        // function dragElement(el) {
+        //     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             
-            el.style.zIndex = 1;
-            // console.log(el.childNodes)
-            if (el.childNodes[1]) {
-                el.childNodes[1].onmousedown = dragMouseDown;
-            } else {
-                /* otherwise, move the DIV from anywhere inside the DIV:*/
-                el.onmousedown = dragMouseDown;
-            }
-            function dragMouseDown(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // get the mouse cursor position at startup:
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                // call a function whenever the cursor moves:
-                document.onmousemove = elementDrag;
-            }
-            function elementDrag(e) {
-                e = e || window.event;
-                e.preventDefault();
-                // calculate the new cursor position:
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                // set the element's new position:
-                el.style.top = (el.offsetTop - pos2) + "px";
-                el.style.left = (el.offsetLeft - pos1) + "px";
-            }
-            function closeDragElement() {
-                /* stop moving when mouse button is released:*/
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
+        //     el.style.zIndex = 1;
+        //     // console.log(el.childNodes)
+        //     if (el.childNodes[1]) {
+        //         el.childNodes[1].onmousedown = dragMouseDown;
+        //     } else {
+        //         /* otherwise, move the DIV from anywhere inside the DIV:*/
+        //         el.onmousedown = dragMouseDown;
+        //     }
+        //     function dragMouseDown(e) {
+        //         e = e || window.event;
+        //         e.preventDefault();
+        //         // get the mouse cursor position at startup:
+        //         pos3 = e.clientX;
+        //         pos4 = e.clientY;
+        //         document.onmouseup = closeDragElement;
+        //         // call a function whenever the cursor moves:
+        //         document.onmousemove = elementDrag;
+        //     }
+        //     function elementDrag(e) {
+        //         e = e || window.event;
+        //         e.preventDefault();
+        //         // calculate the new cursor position:
+        //         pos1 = pos3 - e.clientX;
+        //         pos2 = pos4 - e.clientY;
+        //         pos3 = e.clientX;
+        //         pos4 = e.clientY;
+        //         // set the element's new position:
+        //         el.style.top = (el.offsetTop - pos2) + "px";
+        //         el.style.left = (el.offsetLeft - pos1) + "px";
+        //     }
+        //     function closeDragElement() {
+        //         /* stop moving when mouse button is released:*/
+        //         document.onmouseup = null;
+        //         document.onmousemove = null;
+        //     }
+        // }
         function delteDiv() {
             // const buttonDiv = document.getElementById("btn_close");
             document.addEventListener('click',(e)=>{
