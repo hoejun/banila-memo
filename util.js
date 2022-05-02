@@ -16,8 +16,8 @@ const dragElement = (el) => {
 
   pos3 = window.event.clientX;
   pos4 = window.event.clientY;
+
   if (el.childNodes[1]) {
-    console.log(el.childNodes);
     // el.childNodes[1].onmousedown = dragMouseDown;
     el.childNodes[1].onmousemove = elementDrag;
     document.onmouseup = closeDragElement;
@@ -48,7 +48,6 @@ const dragElement = (el) => {
     el.style.left = el.offsetLeft - pos1 + 'px';
   }
   function closeDragElement() {
-    console.log('!!');
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
     el.childNodes[1].onmousemove = null;

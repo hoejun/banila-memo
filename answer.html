@@ -128,7 +128,9 @@
             // const buttonDiv = document.getElementById("btn_close");
             document.addEventListener('click',(e)=>{
                 const div = e.path[2];
-                div.remove();
+                if (e.target.id === 'btn_close') {
+                    div.remove();
+                }
             })
         }
         function resizeDiv() {
