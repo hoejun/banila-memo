@@ -124,48 +124,48 @@
         //         document.onmousemove = null;
         //     }
         // }
-        function delteDiv() {
-            // const buttonDiv = document.getElementById("btn_close");
-            document.addEventListener('click',(e)=>{
-                const div = e.path[2];
-                if (e.target.id === 'btn_close') {
-                    div.remove();
-                }
-            })
-        }
-        function resizeDiv() {
-            // const textDiv = event.path[1].childNodes[1];            
-            const memoDiv = event.target.offsetParent.offsetParent.id;
-            // const parentDiv = e.target.offsetParent;
-            // console.log(textDiv)
-            const memoId = document.getElementById(memoDiv);
-            let x = 0, y = 0;
-            memoId.addEventListener("mousedown",(e)=>{
-                // e.preventDefault();
-                // console.log(e.path[1].childNodes[1])
-                const rect = e.path[1].childNodes[1].getBoundingClientRect();
+        // function delteDiv() {
+        //     // const buttonDiv = document.getElementById("btn_close");
+        //     document.addEventListener('click',(e)=>{
+        //         const div = e.path[2];
+        //         if (e.target.id === 'btn_close') {
+        //             div.remove();
+        //         }
+        //     })
+        // }
+        // function resizeDiv() {
+        //     // const textDiv = event.path[1].childNodes[1];            
+        //     const memoDiv = event.target.offsetParent.offsetParent.id;
+        //     // const parentDiv = e.target.offsetParent;
+        //     // console.log(textDiv)
+        //     const memoId = document.getElementById(memoDiv);
+        //     let x = 0, y = 0;
+        //     memoId.addEventListener("mousedown",(e)=>{
+        //         // e.preventDefault();
+        //         // console.log(e.path[1].childNodes[1])
+        //         const rect = e.path[1].childNodes[1].getBoundingClientRect();
                 
-                // const x = event.clientX - rect.left;
-                // const y = event.clientY - rect.top;
-                // const w = rect.right - e.clientX;
-                // const w = event.clientX - event.clientY;
-                // console.log( e.path[1].childNodes[1].onmousedown.clientX)
-                // console.log(e.path[1].childNodes[1].style)
-                // e.path[1].childNodes[1].style.width = x + 'px';
-                mouseMove(rect);
-            })
-            function mouseMove (_rect) {
-                memoId.addEventListener("mousemove",(e)=>{
-                    x = event.clientX - _rect.left;
-                    y = event.clientY - _rect.top;
+        //         // const x = event.clientX - rect.left;
+        //         // const y = event.clientY - rect.top;
+        //         // const w = rect.right - e.clientX;
+        //         // const w = event.clientX - event.clientY;
+        //         // console.log( e.path[1].childNodes[1].onmousedown.clientX)
+        //         // console.log(e.path[1].childNodes[1].style)
+        //         // e.path[1].childNodes[1].style.width = x + 'px';
+        //         mouseMove(rect);
+        //     })
+        //     function mouseMove (_rect) {
+        //         memoId.addEventListener("mousemove",(e)=>{
+        //             x = event.clientX - _rect.left;
+        //             y = event.clientY - _rect.top;
                     
-                    e.path[1].childNodes[1].style.width = x + 'px';
-                    e.path[1].childNodes[1].style.height = y + 'px';
+        //             e.path[1].childNodes[1].style.width = x + 'px';
+        //             e.path[1].childNodes[1].style.height = y + 'px';
                     
-                })
-            }
+        //         })
+        //     }
             
-        }
+        // }
         
 
         
