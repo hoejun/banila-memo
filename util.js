@@ -112,64 +112,31 @@ const delteDiv = () => {
   });
 };
 
+//사이즈 조절
 const resizeDiv = () => {
-  // const textDiv = event.path[1].childNodes[1];
   const memoDiv = window.event.target.offsetParent.offsetParent.id;
-  // const parentDiv = e.target.offsetParent;
-  // console.log(textDiv)
   const memoId = document.getElementById(memoDiv);
-  let x = 0,
-    y = 0;
+  let x = 0;
+  let y = 0;
+  let isDragging = null;
+  let rect = null;
   memoId.addEventListener('mousedown', (e) => {
-    // e.preventDefault();
-    // console.log(e.path[1].childNodes[1])
-    const rect = e.path[1].childNodes[1].getBoundingClientRect();
-
-    // const x = event.clientX - rect.left;
-    // const y = event.clientY - rect.top;
-    // const w = rect.right - e.clientX;
-    // const w = event.clientX - event.clientY;
-    // console.log( e.path[1].childNodes[1].onmousedown.clientX)
-    // console.log(e.path[1].childNodes[1].style)
-    // e.path[1].childNodes[1].style.width = x + 'px';
-    // mouseMove(rect);
-
-    // document.addEventListener('mousemove', mouseMove(rect));
-    e.path[1].childNodes[1].onmousemove = mouseMove(rect);
-    window.document.onmouseup = null;
-
-    function closeDragElement() {
-      /* stop moving when mouse button is released:*/
-      window.document.onmouseup = null;
-      e.path[1].childNodes[1].onmousemove = null;
-    }
-    // console.log(document.querySelector('.textarea'));
-    // document.querySelector('.textarea').addEventListener('mouseup', (e) => {
-    //   console.log(e);
-    // });
-    window.addEventListener('mouseup', mouseUpCheck);
-    function mouseMove() {
-      memoId.addEventListener('mousemove', (e) => {
-        x = window.event.clientX - rect.left;
-        y = window.event.clientY - rect.top;
-        e.path[1].childNodes[1].style.width = x + 'px';
-        e.path[1].childNodes[1].style.height = y + 'px';
-      });
-    }
-    function mouseUpCheck() {
-      window.document.onmouseup = null;
+    rect = e.path[1].childNodes[1].getBoundingClientRect();
+    isDragging = true;
+    originX = e.clientX;
+    originY = e.clientY;
+  });
+  document.addEventListener('mouseup', (e) => {
+    isDragging = false;
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      x = window.event.clientX - rect.left;
+      y = window.event.clientY - rect.top;
+      e.path[1].childNodes[1].style.width = x + 'px';
+      e.path[1].childNodes[1].style.height = y + 'px';
     }
   });
-
-  // function mouseUp() {
-  //   document.onmouseup = null;
-  // }
-  // function closeDragElement(e) {
-  //   /* stop moving when mouse button is released:*/
-  //   document.onmouseup = null;
-  //   console.log(e.path[1].childNodes[1]);
-  //   e.path[1].childNodes[1].onmousemove = null;
-  // }
 };
 
 //오른쪽 클릭 메뉴 X
