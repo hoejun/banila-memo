@@ -1,14 +1,8 @@
-function divStore(memo) {
-  this.memo = memo;
-}
-const store = new divStore();
-
 //최초 및 새로고침
 const myInit = () => {
   if (localStorage.getItem('now').length > 0) {
     document.getElementsByClassName('wrap')[0].innerHTML = localStorage.getItem('now');
   }
-  // store.memo = document.getElementById('memo');
 };
 
 //드래그
