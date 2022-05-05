@@ -59,11 +59,11 @@ const onMouseDown = (e) => {
   // const newMemo = document.getElementsByClassName('memo');
   const newMemo = document.querySelector('.memo');
   const store = document.getElementsByClassName('wrap')[0].innerHTML;
-
+  // const memoDiv = window.event.target.offsetParent.offsetParent.id;
+  // const memoId = document.getElementById(memoDiv);
   //왼쪽 버튼
   if (e.button === 0 || e.which === 1) {
     const memo = document.getElementsByClassName('memo');
-
     Object.keys(memo).forEach((key) => {
       memo[key].style['z-index'] = 0;
     });
@@ -73,11 +73,15 @@ const onMouseDown = (e) => {
     } else {
       e.path[2].style['z-index'] = 1;
     }
+    if (e.target.className === 'btn_size') {
+      resizeDiv(e.target.offsetParent.offsetParent.id);
+    }
   }
 
   //오른쪽 버튼
   //엘리먼트가 하나도 없을때 오른쪽 클릭 이벤트에 대한 분기 처리 필요
   if (e.button === 2 || e.which === 3) {
+    console.log('@@+');
     // const cloneDiv = newMemo[0].cloneNode(true);
     const cloneDiv = newMemo.cloneNode(true);
 
@@ -107,19 +111,21 @@ const delteDiv = () => {
 };
 
 //사이즈 조절
-const resizeDiv = () => {
-  const memoDiv = window.event.target.offsetParent.offsetParent.id;
+const resizeDiv = (_memoDiv) => {
+  // const memoDiv = window.event.target.offsetParent.offsetParent.id;
+  const memoDiv = _memoDiv;
   const memoId = document.getElementById(memoDiv);
   let x = 0;
   let y = 0;
   let isDragging = null;
   let rect = null;
-  memoId.addEventListener('mousedown', (e) => {
-    rect = e.path[1].childNodes[1].getBoundingClientRect();
-    isDragging = true;
-    originX = e.clientX;
-    originY = e.clientY;
-  });
+  // memoId.addEventListener('mousedown', (e) => {
+  console.log('@@');
+  rect = window.event.path[1].childNodes[1].getBoundingClientRect();
+  isDragging = true;
+  originX = window.event.clientX;
+  originY = window.event.clientY;
+  // });
   document.addEventListener('mouseup', (e) => {
     isDragging = false;
   });
