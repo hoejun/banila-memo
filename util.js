@@ -59,8 +59,7 @@ const onMouseDown = (e) => {
   // const newMemo = document.getElementsByClassName('memo');
   const newMemo = document.querySelector('.memo');
   const store = document.getElementsByClassName('wrap')[0].innerHTML;
-  // const memoDiv = window.event.target.offsetParent.offsetParent.id;
-  // const memoId = document.getElementById(memoDiv);
+
   //왼쪽 버튼
   if (e.button === 0 || e.which === 1) {
     const memo = document.getElementsByClassName('memo');
@@ -68,7 +67,8 @@ const onMouseDown = (e) => {
       memo[key].style['z-index'] = 0;
     });
 
-    if (e.target.offsetParent.id.length > 0) {
+    // if (e.target.offsetParent.id.length > 0) {
+    if (e.target.className === 'header') {
       dragElement(e.target.offsetParent);
     } else {
       e.path[2].style['z-index'] = 1;
@@ -76,12 +76,14 @@ const onMouseDown = (e) => {
     if (e.target.className === 'btn_size') {
       resizeDiv(e.target.offsetParent.offsetParent.id);
     }
+    if (e.target.className === 'btn_close') {
+      delteDiv();
+    }
   }
 
   //오른쪽 버튼
   //엘리먼트가 하나도 없을때 오른쪽 클릭 이벤트에 대한 분기 처리 필요
   if (e.button === 2 || e.which === 3) {
-    console.log('@@+');
     // const cloneDiv = newMemo[0].cloneNode(true);
     const cloneDiv = newMemo.cloneNode(true);
 
@@ -100,13 +102,16 @@ const onMouseDown = (e) => {
 
 //삭제 이벤트
 const delteDiv = () => {
+  // console.log(e.target);
+  // e.path[2].remove();
   // const buttonDiv = document.getElementById("btn_close");
+  console.log(window.event.target.className);
   document.addEventListener('click', (e) => {
-    const div = e.path[2];
-
-    if (e.target.id === 'btn_close') {
-      div.remove();
-    }
+    console.log(e);
+    // const div = e.path[2];
+    // if (e.target.id === 'btn_close') {
+    //   div.remove();
+    // }
   });
 };
 
@@ -120,7 +125,6 @@ const resizeDiv = (_memoDiv) => {
   let isDragging = null;
   let rect = null;
   // memoId.addEventListener('mousedown', (e) => {
-  console.log('@@');
   rect = window.event.path[1].childNodes[1].getBoundingClientRect();
   isDragging = true;
   originX = window.event.clientX;
