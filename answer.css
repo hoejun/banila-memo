@@ -39,6 +39,7 @@ q:before, q:after {
     background-color: #f9f978;
     border-bottom: 1px solid #eee;
     cursor:move;
+    
 }
 
 .memo{

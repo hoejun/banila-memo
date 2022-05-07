@@ -1,24 +1,24 @@
-const memoDiv = `
-<div id="memo" class="memo" style="top:100px;left:100px;">
-  <div class="header">
-      <h1 class="blind">메모장</h1>
-      <button class="btn_close"><span class="blind">닫기</span></button>
-  </div>
-  <div class="content">
-    <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
-        메모 하십시오! 메모 하십시오!메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-    </div>
-    <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
-  </div>
-</div>
-`;
+// const memoDiv = `
+// <div id="memo" class="memo" style="top:100px;left:100px;">
+//   <div class="header">
+//       <h1 class="blind">메모장</h1>
+//       <button class="btn_close"><span class="blind">닫기</span></button>
+//   </div>
+//   <div class="content">
+//     <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
+//         메모 하십시오! 메모 하십시오!메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//         메모 하십시오!<br>
+//     </div>
+//     <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
+//   </div>
+// </div>
+// `;
 const globalDiv = (di) => {
   this.di = di;
 };
@@ -112,16 +112,20 @@ const resizeDiv = (_memoDiv) => {
   originX = window.event.clientX;
   originY = window.event.clientY;
   // });
-  document.addEventListener('mouseup', (e) => {
-    isDragging = false;
-  });
   document.addEventListener('mousemove', (e) => {
     if (isDragging) {
       x = window.event.clientX - rect.left;
       y = window.event.clientY - rect.top;
+      console.log('포인트x', window.event.clientX);
+      console.log('포인트y', window.event.clientY);
+      console.log('x축', x);
+      console.log('y축', y);
       e.path[1].childNodes[1].style.width = x + 'px';
       e.path[1].childNodes[1].style.height = y + 'px';
     }
+  });
+  document.addEventListener('mouseup', (e) => {
+    isDragging = false;
   });
 };
 
@@ -154,7 +158,6 @@ const createTag = (top, left) => {
 const onMouseDown = (e) => {
   // const newMemo = document.getElementsByClassName('memo');
   const newMemo = document.querySelector('.memo');
-  const store = document.getElementsByClassName('wrap')[0].innerHTML;
 
   //왼쪽 버튼
   if (e.button === 0 || e.which === 1) {
@@ -206,11 +209,13 @@ const onMouseDown = (e) => {
     }
     // document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
   }
-  try {
-    localStorage.setItem('now', store);
-  } catch (error) {
-    console.log(error);
-  }
+  // const store = document.getElementsByClassName('wrap')[0].innerHTML;
+  // console.log(store);
+  // try {
+  //   localStorage.setItem('now', store);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 
 //오른쪽 클릭 메뉴 X
@@ -219,3 +224,12 @@ document.addEventListener('contextmenu', (e) => {
 });
 //클릭 이벤트
 document.addEventListener('mousedown', onMouseDown);
+
+document.addEventListener('mouseup', (e) => {
+  const store = document.getElementsByClassName('wrap')[0].innerHTML;
+  try {
+    localStorage.setItem('now', store);
+  } catch (error) {
+    console.log(error);
+  }
+});
