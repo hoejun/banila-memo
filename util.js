@@ -20,7 +20,7 @@ const memoDiv = `
 </div>
 `;
 const globalDiv = (di) => {
-  const global_div = di;
+  this.di = di;
 };
 //최초 및 새로고침
 const myInit = () => {
@@ -83,9 +83,9 @@ const dragElement = (el) => {
 
 //삭제 이벤트
 const delteDiv = () => {
-  console.log(window.document.querySelector('.wrap').children.length);
-  if (window.document.querySelector('.wrap').children.length === 1) {
-  }
+  // console.log(window.document.querySelector('.wrap').children.length);
+  // if (window.document.querySelector('.wrap').children.length === 1) {
+  // }
   window.event.path[2].remove();
   // const buttonDiv = document.getElementById("btn_close");
   // document.addEventListener('click', (e) => {
@@ -125,40 +125,30 @@ const resizeDiv = (_memoDiv) => {
   });
 };
 
-const createTag = () => {
-  // let tagArea = document.getElementById('tagArea');
-  // let new_pTag = document.createElement('p');
-
-  // new_pTag.setAttribute('class', 'pTag');
-  // new_pTag.innerHTML = pTagCount+". 추가된 p태그";
-
-  // tagArea.appendChild(new_pTag);
-
-  // pTagCount++;
+const createTag = (top, left) => {
   let htmlStr = `
-  <div class="memo">
-  <div class="header">
-      <h1 class="blind">메모장</h1>
-      <button class="btn_close"><span class="blind">닫기</span></button>
-  </div>
-  <div class="content">
-    <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
-        메모 하십시오! 메모 하십시오!메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
-        메모 하십시오!<br>
+    <div id="memo" class="memo" style="top:${top}; left:${left};">
+      <div class="header">
+          <h1 class="blind">메모장</h1>
+          <button class="btn_close"><span class="blind">닫기</span></button>
+      </div>
+      <div class="content">
+        <div class="textarea" contenteditable="true" style="width:200px; height:100px;">
+            메모 하십시오! 메모 하십시오!메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+            메모 하십시오!<br>
+        </div>
+        <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
+      </div>
     </div>
-    <button class="btn_size"><span class="blind">메모장 크기 조절</span></button>
-  </div>
-</div>
   `;
+
   return htmlStr;
-  // const list = document.querySelector('.wrap');
-  // list.innerHTML = htmlStr;
 };
 //마우스 이벤트
 const onMouseDown = (e) => {
@@ -200,20 +190,21 @@ const onMouseDown = (e) => {
       cloneDiv.id = 'memo_' + e.clientX;
       cloneDiv.style.top = e.clientY + 'px';
       cloneDiv.style.left = e.clientX + 'px';
+      document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
     } else {
+      const list = document.querySelector('.wrap');
+      const top = e.clientY + 'px';
+      const left = e.clientX + 'px';
+      list.innerHTML = createTag(top, left);
       // cloneDiv = createTag().cloneNode(true);
       // var $div = document.createElement('memo');
-      // const list = document.querySelector('.wrap');
+      // const list = document.createElement('memo');
+      // const child = document.createElement('p');
+      // list.appendChild(child);
       // list.innerHTML = createTag();
-      const list = document.querySelector('.wrap');
-      list.appendChild(createTag());
-
-      // cloneDiv.id = 'memo_' + e.clientX;
-      // console.log(cloneDiv);
-      // cloneDiv.style.top = e.clientY + 'px';
-      // cloneDiv.style.left = e.clientX + 'px';
+      // list.appendChild(createTag());
     }
-    document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
+    // document.getElementsByClassName('wrap')[0].appendChild(cloneDiv);
   }
   try {
     localStorage.setItem('now', store);
