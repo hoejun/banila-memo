@@ -112,21 +112,64 @@ const resizeDiv = (_memoDiv) => {
   originX = window.event.clientX;
   originY = window.event.clientY;
   // });
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      x = window.event.clientX - rect.left;
-      y = window.event.clientY - rect.top;
-      console.log('포인트x', window.event.clientX);
-      console.log('포인트y', window.event.clientY);
-      console.log('x축', x);
-      console.log('y축', y);
-      e.path[1].childNodes[1].style.width = x + 'px';
-      e.path[1].childNodes[1].style.height = y + 'px';
+  memoId.addEventListener('mousemove', (e) => {
+    if (!isDragging) {
+      return false;
     }
+    x = window.event.clientX - parseInt(rect.left);
+    y = window.event.clientY - parseInt(rect.top);
+    // console.log(e.path[1].childNodes[1]);
+    // e.path[1].childNodes[1].style.width = x + 'px';
+    // e.path[1].childNodes[1].style.height = y + 'px';
+
+    if (e.path[1].querySelector('.memo')) {
+      console.log(e.target.lastElementChild);
+      e.target.lastElementChild.querySelector('.textarea').style.width = x + 'px';
+      e.target.lastElementChild.querySelector('.textarea').style.width = y + 'px';
+      // e.path[1].childNodes[3].querySelector('.textarea').style.width = x + 'px';
+      // e.path[1].childNodes[3].querySelector('.textarea').style.height = y + 'px';
+    } else {
+      e.path[1].querySelector('.textarea').style.width = x + 'px';
+      e.path[1].querySelector('.textarea').style.height = y + 'px';
+    }
+    console.log(e);
+    // document.querySelector('.textarea').style.width = x + 'px';
+    // document.querySelector('.textarea').style.height = y + 'px';
   });
   document.addEventListener('mouseup', (e) => {
+    console.log(e);
     isDragging = false;
   });
+
+  // document.addEventListener('mousemove', (e) => {
+  //   if (!isDragging) {
+  //     return false;
+  //   }
+
+  //   x = window.event.clientX - parseInt(rect.left);
+  //   y = window.event.clientY - parseInt(rect.top);
+  //   console.log('포인트x', window.event.clientX);
+  //   console.log('포인트y', window.event.clientY);
+  //   console.log('x축', x);
+  //   console.log('y축', y);
+
+  //   if (e.path[1].childNodes[1].length === 1) {
+  //     return 0;
+  //   } else {
+  //     // console.log(e.path[1].childNodes[1]);
+  //     // e.path[1].childNodes[1].style.width = x + 'px';
+  //     // e.path[1].childNodes[1].style.height = y + 'px';
+  //     console.log(e.target);
+  //     e.path[1].querySelector('.textarea').style.width = x + 'px';
+  //     e.path[1].querySelector('.textarea').style.height = y + 'px';
+  //     // document.querySelector('.textarea').style.width = x + 'px';
+  //     // document.querySelector('.textarea').style.height = y + 'px';
+  //   }
+  //   // }
+  // });
+  // document.addEventListener('mouseup', (e) => {
+  //   isDragging = false;
+  // });
 };
 
 const createTag = (top, left) => {
